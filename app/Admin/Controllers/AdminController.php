@@ -4,6 +4,7 @@ namespace App\Admin\Controllers;
 
 use App\Admin_Role;
 use App\Adminuser;
+use App\Notice;
 
 class AdminController extends Controller
 {
@@ -34,6 +35,7 @@ class AdminController extends Controller
     public  function index()
 
     {
+
 
         $admin=new Adminuser();
         $admin->name="1";

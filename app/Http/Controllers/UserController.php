@@ -8,6 +8,7 @@ use App\Zan;
 use Illuminate\Http\Request;
 use App\User;
 use App\Comment;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
@@ -162,7 +163,17 @@ class UserController extends Controller
 
         ];
 
+        //评论完了之后要销毁缓存
+        $commentkey="postComment".$post->id;
+//        dd($commentkey);
+        Cache::pull($commentkey);
+
         Comment::create($arr);
+
+
+
+
+
         return back();
     }
 
@@ -174,7 +185,9 @@ class UserController extends Controller
             $info=\Auth::user()->info;
 
             $touPicture=\Auth::user()->touPicture;
-            return view("index/user/update",compact('touPicture','info'));
+
+            $name=\Auth::user()->name;
+            return view("index/user/update",compact('touPicture','info','name'));
         }else{
             return back()->withErrors("请别瞎搞!");
         }

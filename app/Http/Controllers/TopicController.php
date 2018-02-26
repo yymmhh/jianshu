@@ -18,15 +18,16 @@ class TopicController extends Controller
 //        $topicAllPost=$topic->posts;
 ////      我的文章但是不在这个专题的
 //        $lastpost=$mypost->diff($topicAllPost);
-        $post1=Post::find(13);
+//        $post1=Post::find(13);
 
 //        dd($post1->PostTopic);
 
+        $lastpost=
 //
         $lastpost=Post::authpost(\Auth::id())->NotThisTopicPost($topic->id)->get();
 //        dd($lastpost);
 
-        $mypost=\Auth::user()->posts;
+//        $mypost=\Auth::user()->posts;
 //        dd($mypost);
         $post=$topic->posts()->withcount(['zan','comment'])->paginate(4);
        return view('index/topic/index',compact('post','topic','lastpost'));

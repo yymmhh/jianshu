@@ -11,24 +11,53 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+//Route::get('/', function () {
+//    return view('welcome');
+//});
+
+Route::any('/file','PostController@file');
+Route::post('/file','PostController@filego');
+
+
+
+
+
+//获取天气的json
+
+Route::get('/weather/{position}','PostController@wealther');
+
+
+
+
+//设置首页就是文章列表页面
+Route::get('/','PostController@index');
+
+
+//文章相关
+
+
 
 
 
 Route::resource('/post','PostController');
 
 
+
+
+
+//登陆注册相关
 Route::resource('/login','UserController');
 
+//登出
 Route::get('/logout',function(){
     \Auth::logout();
     return redirect('login');
 });
 
 
+//个人资料修改
 Route::get('user/{user}/update','\App\Http\Controllers\UserController@updateUser');
+//修改行为
 Route::post('user/{user}/store','\App\Http\Controllers\UserController@updateStore');
 
 //文章的删除
@@ -49,7 +78,7 @@ Route::group(['middleware' => ['Lend']], function () {
 });
 
 
-Route::get('user/{user}','\App\Http\Controllers\FanController@index');
+Route::get('user/{user}.袁明航','\App\Http\Controllers\FanController@index');
 Route::get('user/{user}/fan','\App\Http\Controllers\FanController@fan');
 Route::get('user/{user}/ufan','\App\Http\Controllers\FanController@ufan');
 Route::get('topic/{topic}','\App\Http\Controllers\TopicController@index');

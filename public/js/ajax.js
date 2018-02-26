@@ -3,6 +3,14 @@
  */
 $(function(){
 
+
+
+
+
+
+
+
+
     $(".zan").click(function(){
         var don=$(".zan").attr("don");
         var postid=$(this).attr("post");

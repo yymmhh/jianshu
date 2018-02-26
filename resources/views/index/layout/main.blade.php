@@ -7,8 +7,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
 
+    <link rel="icon" href="{{URL::asset('img/timg.jpg')}}" type="image/x-icon"/>
 
-    <title>test</title>
+    <title>拉瓦博客</title>
 
 
     <!-- Bootstrap core CSS -->
@@ -26,12 +27,7 @@
     </style>
     <!-- Custom styles for this template -->
     <link href="{{URL::asset('css/blog.css')}}" rel="stylesheet">
-    <script src="{{URL::asset('/js1/jquery-2.1.1.min.js')}}"></script>
-    {{--<script src="{{URL::asset('js/bootstrap.min.js')}}"></script>--}}
 
-    <script src="{{URL::asset('/js1/bootstrap.min.js')}}"></script>
-    <script src="{{URL::asset('/js1/wangEditor.min.js')}}"></script>
-    <script src="{{URL::asset('/js/ajax.js')}}"></script>
 
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
@@ -57,10 +53,10 @@
 
             </ul>
 
-            <ul class="nav navbar-nav">
-                <li><a href="#">{{\Auth::id()}}</a></li>
+            {{--<ul class="nav navbar-nav">--}}
+                {{--<li><a href="#">{{\Auth::id()}}</a></li>--}}
 
-            </ul>
+            {{--</ul>--}}
 
             @include('index.layout.topic')
 
@@ -76,13 +72,8 @@
             {{--<li></li>--}}
 
         {{--</ul>--}}
-        <ul class="nav navbar-nav weather1" id="weather1">
-            <li><a href="javascript:void(0)">{{$weather[0]->city}}</a></li>
-            <li><a href="javascript:void(0)">{{$weather[0]->quality}}</a></li>
-            <li><a href="javascript:void(0)">{{$weather[0]->wendu}}°</a></li>
+        @yield('weather')
 
-
-        </ul>
 
         <ul class="nav navbar-nav navbar-right">
             @if(\Auth::id()!=null)
@@ -131,7 +122,8 @@
 
 
 
-            <div class="row center-block" style="width: 619px">
+
+<div class="row center-block" style="width: 619px">
 
                 @yield('content')
 
@@ -148,4 +140,13 @@
 
 
 </body>
+<script src="{{URL::asset('/js1/jquery-2.1.1.min.js')}}"></script>
+{{--<script src="{{URL::asset('js/bootstrap.min.js')}}"></script>--}}
+
+<script src="{{URL::asset('/js1/bootstrap.min.js')}}"></script>
+<script src="{{URL::asset('/js1/wangEditor.min.js')}}"></script>
+
+<script src="{{URL::asset('/js/ajax.js')}}"></script>
+
+@yield('wl_js')
 </html>

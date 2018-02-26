@@ -4,9 +4,11 @@ namespace App\Providers;
 
 use App\Admin_Authority;
 use App\Adminuser;
+use App\Post;
 use App\User;
 use App\Weather;
 use  App\Api\Position;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
@@ -30,6 +32,15 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
+
+        Gate::define("123",function(User $user,$post){
+
+            dd($post);
+
+        });
+
+
+
         //
         \View::composer('index/layout/topic',function($view){
         $topic=\App\Topic::all();
@@ -39,45 +50,37 @@ class AuthServiceProvider extends ServiceProvider
 
 
             \View::composer('index/layout/main',function($view){
-                $postition=new Position();
-                $form= $postition->Get_Ip_From();
-                $city=$form["data"]["city"];
-                $time=date("Ymd");
-//                dd($city);
-                $info= Weather::where('date',$time)
-                    ->where('city',$city)
-                    ->get();
-//                dd($isok->count()<1);
-//                dd($info);
-                if($info->count()<1)
-                {
+//                $postition=new Position();
+//                $form= $postition->Get_Ip_From();
+//                $city=$form["data"]["city"];
+//                $time=date("Ymd");
+//                //缓存的键是时间+城市
+//                $weatherKey=$time.$city;
+//                $info="";
+//                //使用缓存技术来存储天气
+//                if (Cache::has($weatherKey)) {
+//                    //如果缓存中有就读取出来
+//                    $info=Cache::get($weatherKey);
+//                }else{
+//
+//                    $weather=$postition->weather($city);
+//                    $fuck=collect($weather);
+//                    $date=$fuck["date"];
+//
+//                    $city=$fuck["city"];
+//
+//                    $quality=$fuck["data"]["quality"];
+//
+//                    $wendu=$fuck["data"]["wendu"];
+//
+//                    $arr=[$date,$city,$quality,$wendu];
+//                    //没有的话就添加到缓存中设置时间为一天
+//                    Cache::put($weatherKey,$arr,1450);
+//                }
+////                $info=Cache::get($weatherKey);
 
 
-                    $weather=$postition->weather($city);
-                    $fuck=collect($weather);
-//                    dd($fuck["date"]);
-                $date=$fuck["date"];
-                $city=$fuck["city"];
-                $quality=$fuck["data"]["quality"];
-                $wendu=$fuck["data"]["wendu"];
-                 $info= Weather::create(compact('date','city','quality','wendu'));
-
-                }
-
-
-//                dd($weather["date"]);
-//                $date=$weather["date"];
-////                dd($date);
-//                $city=$weather["city"];
-//                $quality=$weather["data"]["quality"];
-//                $wendu=$weather["data"]["wendu"];
-//                $info=new Weather($weather["date"],$weather["city"],$weather["data"]["quality"],$weather["data"]["wendu"]);
-//                $info=new Weather($date,$city,$quality,$wendu);
-//                dd($info->getCity());
-
-
-//                $arr=$weather->city;
-                $view->with('weather',$info);
+//                $view->with('weather',$info);
 
                 if(\Auth::check()){
 
@@ -88,7 +91,7 @@ class AuthServiceProvider extends ServiceProvider
 
 
             });
-//            dd(123);
+
 
 
 
@@ -98,22 +101,25 @@ class AuthServiceProvider extends ServiceProvider
         });
 
 
-        Gate::define('post',function(Adminuser $admin){
-            dd($admin);
-//            return 1==1;
-        });
 
 
+
+
+        //验证修改文章
         Gate::define('update-post', function ($user, $post) {
-            return $user->id == $post->user_id;
+//            dd($user);
+            return $user->id == $post;
         });
 
+        //验证删除文章
         Gate::define('delete-post',function($user,$post){
 //            dd(123);
 //            dd($user);
-            return $user->id == $post->user_id;
+            return $user->id == $post;
         });
 
+
+        //后台的权限认证
         $Authoritys=Admin_Authority::all();
 
         foreach($Authoritys as $item){

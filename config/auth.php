@@ -73,16 +73,20 @@ return [
     */
 
     'providers' => [
-        'admins' => [
-            'driver' => 'eloquent',
-            'model' => App\Adminuser::class,
-        ],
 
 
         'users' => [
             'driver' => 'eloquent',
             'model' => App\User::class,
+        ],
+
+        'admins' => [
+            'driver' => 'eloquent',
+            'model' => App\Adminuser::class,
         ]
+
+
+
 
 
     ],

@@ -42,12 +42,13 @@
                     </h4>
                 </div>
                 <div class="modal-body">
+                    @if(\Auth::check())
                    <form action="/topic/{{$topic->id}}/tou" method="POST">
                        {{csrf_field()}}
                        @foreach($lastpost as $item)
                        <input type="checkbox" name="post[]" value="{{$item->id}}">{{$item->title}}<br>
                        @endforeach
-
+                @endif
 
                 </div>
                 <div class="modal-footer">

@@ -6,17 +6,18 @@
 
     <ul class="list-group " >
 
+{{--        {{dd(\Auth::user())}}--}}
             <li class="list-group-item" style="border: 0px"><h3><a  style="color: #3c3c3c" href="/post/{{$post->id}}">{{$post->title}}</a></h3>
-            @can('update-post',$post)
+            @can('update-post',$post->user_id)
                 <a class="label label-info" href="/post/{{$post->id}}/edit">修改</a>
                 @endcan
 
-                @can('delete-post',$post)
+                @can('delete-post',$post->user_id)
                 <a class="label label-danger delete" id="delete1" href="/post/{{$post->id}}/delete">删除</a>
 
                 @endcan
                 <br>
-                <span style="font-size: 20px"><a href="/user/{{$post->user->id}}">{{$post->user->name}}</a> </span><span>{{$post->created_at}}</span>
+                <span style="font-size: 20px"><a href="/user/{{$post->user->id}}">{{$post->name}}</a> </span><span>{{$post->created_at}}</span>
                 <p style="padding-top: 20px">{!! $post->content!!}</p>
                 <br>
 
@@ -67,15 +68,31 @@
 
     <br>
     <ul class="list-group ">
+
+
         @foreach($comment as $item)
-        <li class="list-group-item">{{$item->content}}
-            <strong style="color:cornflowerblue;float: right">{{$item->user->name}}</strong><span style="float: right">{{$item->created_at->diffForHumans()}}
+                <li class="list-group-item">{{$item->content}}
+                <strong style="color:cornflowerblue;float: right">{{$item->user->name}}</strong><span style="float: right">{{$item->created_at->diffForHumans()}}
             </span>
+
+
         </li>
         @endforeach
 
 
     </ul>
+
+
+
+
+@endsection
+
+@section('foot')
+
+
+@endsection
+
+@section('wl_js')
     <script>
         $("#delete1").click(function(){
             var msg = "您真的确定要删除吗？\n\n请确认！";
@@ -88,14 +105,4 @@
         });
 
     </script>
-
-
-
-@endsection
-
-@section('foot')
-
-
-@endsection
-
-
+    @endsection

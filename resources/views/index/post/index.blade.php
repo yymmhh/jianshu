@@ -4,9 +4,12 @@
 
 @section('content')
     @include('index.layout.lun')
+
 @include('index.layout.error')
 
+
 @include('index.layout.session')
+
 
 
     <ul class="list-group " >
@@ -37,4 +40,45 @@
 
 @endsection
 
+
+@section('weather')
+    <ul class="nav navbar-nav weather1" id="weather1">
+        <li><a class="ymh_city" href="javascript:void(0)"></a></li>
+        <li><a class="ymh_6bu6" href="javascript:void(0)"></a></li>
+        {{--<li><a href="javascript:void(0)">{{$weather[3]}}°</a></li>--}}
+        <li><a class="ymh_wendu" href="javascript:void(0)"></a></li>
+
+
+    </ul>
+    @endsection
+
+
+@section('wl_js')
+    <script src="http://int.dpool.sina.com.cn/iplookup/iplookup.php?format=js"></script>
+    <script>
+    //网页加载完成之后加载天气接口
+    var city = remote_ip_info['city'];
+    //alert(city)
+
+    $.ajax({
+    type: 'GET',
+    url: '/weather/'+city,
+    //data: data,
+
+    dataType: "json",
+    success: function(result){
+
+    //alert(result.arr.city);
+    if(result.status==0)
+    {
+
+    $(".ymh_city").html(result.arr.city);
+    $(".ymh_6bu6").html(result.arr.quality);
+    $(".ymh_wendu").html(result.arr.wendu+"°");
+    }
+    }
+    });
+
+    </script>
+    @endsection
 

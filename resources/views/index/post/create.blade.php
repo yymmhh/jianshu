@@ -21,13 +21,7 @@
     <input type="submit" class="btn btn-lg" value="提交">
 </form>
 
-<script>
 
-    var editor = new wangEditor('content');
-
-    editor.create();
-
-</script>
 
 
 @endsection
@@ -36,3 +30,14 @@
 
 
 @endsection
+
+
+@section('wl_js')
+    <script>
+
+        var editor = new wangEditor('content');
+
+        editor.create();
+
+    </script>
+    @endsection
